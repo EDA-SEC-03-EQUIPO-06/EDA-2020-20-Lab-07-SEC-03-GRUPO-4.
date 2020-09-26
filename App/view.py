@@ -38,7 +38,7 @@ operación seleccionada.
 # ___________________________________________________
 
 
-crimefile = 'crime-utf8.csv'
+accidentfile = 'us_accidents_small.csv'
 
 # ___________________________________________________
 #  Menu principal
@@ -71,10 +71,21 @@ while True:
 
     elif int(inputs[0]) == 2:
         print("\nCargando información de crimenes ....")
+        controller.loadData(cont,accidentfile)
+        print("Accidentes Cargados: "+ str(controller.accidentsSize(cont)))
+        print("Altura del arbol: " + str(controller.indexHeight(cont)))
+        print("Elementos en el arbol: " + str(controller.indexSize(cont)))
+        print("Menor Llave: " + str(controller.minKey(cont)))
+        print("Mayor Llave: " + str(controller.maxKey(cont)))
 
     elif int(inputs[0]) == 3:
-        print("\nBuscando crimenes en un rango de fechas: ")
-
+        print("\nBuscando accidentes en una fecha: ")
+        date = input("Fecha (YYYY-MM-DD)")
+        numAccidents = controller.getAccidentsByDate(cont,date)
+        if numAccidents is not None:
+            print("En esta fecha hubieron {} accidentes de severidad 1, {} accidentes de severidad 2, {} accidentes de severidad 3 y {} accidentes de severidad 4".format(numAccidents[0],numAccidents[1],numAccidents[2],numAccidents[3]))
+        else:
+            print("No se encontraron accidentes en esta fecha")
 
     elif int(inputs[0]) == 4:
         print("\nRequerimiento No 1 del reto 3: ")
