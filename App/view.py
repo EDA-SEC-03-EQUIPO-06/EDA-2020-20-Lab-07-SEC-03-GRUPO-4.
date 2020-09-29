@@ -38,7 +38,7 @@ operación seleccionada.
 # ___________________________________________________
 
 
-crimefile = 'crime-utf8.csv'
+accidentsfile = 'us_accidents_small.csv'
 
 # ___________________________________________________
 #  Menu principal
@@ -51,7 +51,7 @@ def printMenu():
     print("Bienvenido")
     print("1- Inicializar Analizador")
     print("2- Cargar información de accidentes")
-    print("3- Requerimento 1")
+    print("3- Buscar Accidentes por Fecha")
     print("4- Requerimento 2")
     print("0- Salir")
     print("*******************************************")
@@ -70,15 +70,20 @@ while True:
         cont = controller.init()
 
     elif int(inputs[0]) == 2:
-        print("\nCargando información de crimenes ....")
+        print("\nCargando información de accidentes ....")
+        controller.loadData(cont, accidentsfile)
+        print('Accidentes cargados: ' + str(controller.AccidentsSize(cont)))
+        print('Altura del arbol: ' + str(controller.indexHeight(cont)))
+        print('Elementos en el arbol: ' + str(controller.indexSize(cont)))
+        print('Menor Llave: ' + str(controller.minKey(cont)))
+        print('Mayor Llave: ' + str(controller.maxKey(cont)))
 
     elif int(inputs[0]) == 3:
-        print("\nBuscando crimenes en un rango de fechas: ")
-
-
-    elif int(inputs[0]) == 4:
-        print("\nRequerimiento No 1 del reto 3: ")
-
+        print("\nBuscando accidentes en un rango de fechas: ")
+        initialDate = input("Fecha Inicial (YYYY-MM-DD): ")
+        finalDate = input("Fecha Final (YYYY-MM-DD): ")
+        lst = controller.getAccidentsByRange(cont, initialDate, finalDate)
+        print("\nEn el rango seleccionado hubo un total de: " + str(lt.size(lst)+ "accidentes."))
     else:
         sys.exit(0)
 sys.exit(0)
