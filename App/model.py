@@ -149,6 +149,9 @@ def indexSize(analyzer):
     """
     return om.size(analyzer['dateIndex'])
 
+def listSize(lst):
+    return lt.size(lst)
+
 def minKey(analyzer):
     """Numero de autores leido
     """
@@ -161,13 +164,25 @@ def maxKey(analyzer):
     return om.maxKey(analyzer['dateIndex'])
 
 
-def getAccidentsByRange(analyzer, initialDate, finalDate):
+def getAccidentsByDate(analyzer, Date):
     """
     Retorna el numero de crimenes en un rago de fechas.
     """
-    lst = om.values(analyzer['dateIndex'], initialDate, finalDate)
+    lst = om.get(analyzer['dateIndex'], Date)
     return lst
 
+def getAccidentsBySeverity(analyzer, Date, Severity):
+    """
+    Para una fecha determinada, retorna el numero de crimenes
+    de un tipo especifico.
+    """
+    Date = om.get(analyzer['dateIndex'], Date)
+    if Date['key'] is not None:
+        Severitymap = me.getValue(Date)['SeverityIndex']
+        numseverity = m.get(Severitymap, str(Severity))
+        if numseverity is not None:
+            return m.size(me.getValue(numseverity)['lstseverity'])
+        return 0
 
 # ==============================
 # Funciones de Comparacion
