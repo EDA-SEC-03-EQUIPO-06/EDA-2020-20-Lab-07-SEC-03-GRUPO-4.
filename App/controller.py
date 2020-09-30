@@ -40,10 +40,11 @@ recae sobre el controlador.
 
 def init():
     """
-    Llama la funcion de inicializacion del modelo.
+    Llama la funcion de inicializacion  del modelo.
     """
-
-    return None
+    # catalog es utilizado para interactuar con el modelo
+    analyzer = model.newAnalyzer()
+    return analyzer
 
 
 # ___________________________________________________
@@ -55,9 +56,66 @@ def loadData(analyzer, accidentsfile):
     """
     Carga los datos de los archivos CSV en el modelo
     """
-    
+    accidentsfile = cf.data_dir + accidentsfile
+    input_file = csv.DictReader(open(accidentsfile, encoding="utf-8"),
+                                delimiter=",")
+    for accident in input_file:
+        model.addAccident(analyzer, accident)
     return analyzer
 
 # ___________________________________________________
 #  Funciones para consultas
 # ___________________________________________________
+def AccidentsSize(analyzer):
+    """
+    Numero de crimenes leidos
+    """
+    return model.AccidentsSize(analyzer)
+
+
+def indexHeight(analyzer):
+    """
+    Altura del indice (arbol)
+    """
+    return model.indexHeight(analyzer)
+
+
+def indexSize(analyzer):
+    """
+    Numero de nodos en el arbol
+    """
+    return model.indexSize(analyzer)
+
+
+def minKey(analyzer):
+    """
+    La menor llave del arbol
+    """
+    return model.minKey(analyzer)
+
+
+def maxKey(analyzer):
+    """
+    La mayor llave del arbol
+    """
+    return model.maxKey(analyzer)
+
+def getAccidentsByDate(analyzer, Date):
+    """
+    Retorna el total de crimenes en un rango de fechas
+    """
+    dic={}
+    for i in range(1,5):
+        num=getAccidentsBySeverity(analyzer,Date,i)
+        dic[i]=num
+    return dic
+
+def getAccidentsBySeverity(analyzer, Date,
+                         Severity):
+    """
+    Retorna el total de crimenes de un tipo especifico en una
+    fecha determinada
+    """
+    Date = datetime.datetime.strptime(Date, '%Y-%m-%d')
+    return model.getAccidentsBySeverity(analyzer, Date.date(),
+                                      Severity)
