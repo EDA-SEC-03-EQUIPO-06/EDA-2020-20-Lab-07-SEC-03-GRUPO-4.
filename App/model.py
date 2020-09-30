@@ -177,11 +177,14 @@ def getAccidentsBySeverity(analyzer, Date, Severity):
     de un tipo especifico.
     """
     Date = om.get(analyzer['dateIndex'], Date)
-    if Date['key'] is not None:
-        Severitymap = me.getValue(Date)['SeverityIndex']
-        numseverity = m.get(Severitymap, str(Severity))
-        if numseverity is not None:
-            return m.size(me.getValue(numseverity)['lstseverity'])
+    try:
+        if Date['key'] is not None:
+            Severitymap = me.getValue(Date)['SeverityIndex']
+            numseverity = m.get(Severitymap, str(Severity))
+            if numseverity is not None:
+                return m.size(me.getValue(numseverity)['lstseverity'])
+            return 0
+    except:
         return 0
 
 # ==============================

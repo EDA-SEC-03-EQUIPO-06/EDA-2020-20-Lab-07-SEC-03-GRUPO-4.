@@ -83,11 +83,14 @@ while True:
         Date = input("Fecha (YYYY-MM-DD): ")
         dic = controller.getAccidentsByDate(cont, Date)
         total= dic[1]+dic[2] + dic[3]+ dic[4]
-        print("\nEn la fecha seleccionada hubo un total de: " + str(total)+ " accidentes.")
-        print("Hubo " + str(dic[1])+ " accidentes de severidad 1")
-        print("Hubo " + str(dic[2])+ " accidentes de severidad 2")
-        print("Hubo " + str(dic[3])+ " accidentes de severidad 3")
-        print("Hubo " + str(dic[4])+ " accidentes de severidad 4")
+        if dic[1]==0 and dic[2]==0 and dic[3]==0 and dic[4]==0:
+            print("\nNo se encontraron accidentes en esa fecha")
+        else:
+            print("\nEn la fecha seleccionada hubo un total de " + str(total)+ " accidentes ")
+            print("Hubo " + str(dic[1])+ " accidentes de severidad 1")
+            print("Hubo " + str(dic[2])+ " accidentes de severidad 2")
+            print("Hubo " + str(dic[3])+ " accidentes de severidad 3")
+            print("Hubo " + str(dic[4])+ " accidentes de severidad 4")
     else:
         sys.exit(0)
 sys.exit(0)
